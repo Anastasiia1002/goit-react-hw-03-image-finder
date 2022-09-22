@@ -1,10 +1,16 @@
 import React from 'react';
+import css from './ImageGalleryItems.module.css';
 
-const ImageGalleryItem = ({ image }) => {
-  console.log(image.id);
+const ImageGalleryItem = ({ image, toggleModal }) => {
   return (
-    <li className="gallery-item">
-      <img src={image.webformatURL} alt={image.tags} />
+    <li className={css.ImageGalleryItem}>
+      <img
+        onClick={toggleModal}
+        id={image.id}
+        src={image.webformatURL}
+        alt={image.tags}
+        className={css.image}
+      />
     </li>
   );
 };

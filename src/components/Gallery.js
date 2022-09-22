@@ -1,26 +1,26 @@
 import React from 'react';
-
+import css from './Gallery.module.css';
 import ImageGallery from './ImageGallery/ImageGallery';
-// import Loader from './Loader/Loader';
 import Searchbar from './Searchbar/Searchbar';
 
 class Gallery extends React.Component {
   state = {
     search: '',
   };
+
   onSubmit = search => {
-    this.setState({ search });
+    this.setState({ search, page: 1 });
   };
-  // componentDidMount() {
-  //   this.setState({ loading: true });
-  // }
+
+  largeImageId = imageLargeId => {
+    this.setState({ imageLargeId });
+  };
 
   render() {
     return (
-      <div>
+      <div className={css.Gallery}>
         <Searchbar onSubmit={this.onSubmit} />
         <ImageGallery search={this.state.search} />
-        {/* <Loader /> */}
       </div>
     );
   }
