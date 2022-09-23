@@ -3,6 +3,7 @@ import ImageGalleryItem from '../ImageGalleryItem/ImageGalleryItem';
 import Loader from '../Loader/Loader';
 import apiImages from '../../utils/searchImages';
 import Modal from '../Modal/Modal';
+import Button from '../Button/Button';
 
 import css from './ImageGallery.module.css';
 
@@ -22,17 +23,18 @@ class ImageGallery extends React.Component {
     status: Status.IDLE,
     showModal: false,
     largeImageId: '',
+    largeImageIdUser: '',
   };
 
   componentDidUpdate(prevProps, prevState) {
     const prevSearch = prevProps.search;
     const nextSearch = this.props.search;
 
-    if (prevSearch !== nextSearch) {
+    if ((prevSearch !== nextSearch, prevProps.page !== this.props.page)) {
       this.setState({ status: Status.PENDING });
 
       apiImages
-        .searchImages(nextSearch, this.state.page)
+        .searchImages(nextSearch, this.props.page)
         .then(images =>
           this.setState(prev => ({
             images: [...prev.images, ...images],
@@ -43,23 +45,25 @@ class ImageGallery extends React.Component {
         .catch(error => this.setState({ error, status: Status.REJECTED }));
     }
   }
-  toggleModal = e => {
-    console.log(e.currentTarget.id);
-    this.setState(({ showModal }) => ({
-      showModal: !showModal,
-      largeImageId: e.currentTarget.id,
+
+  toggleModal = (largeImage, user) => {
+    this.setState(prev => ({
+      showModal: !prev.showModal,
+      largeImageId: largeImage,
+      largeImageIdUser: user,
     }));
-    console.log(this.state.largeImageId);
   };
-  findImageId = () => {
-    const imgId = this.state.images.find(image => {
-      return image.id === this.state.largeImageId;
-    });
-    return imgId;
-  };
+  // loadMore = () => {
+  //   const { page } = this.state;
+  //   const newPage = page + 1;
+
+  //   this.setState({ page: newPage });
+  //   console.log('123');
+  // };
 
   render() {
-    const { images, status, showModal, largeImageId } = this.state;
+    const { images, status, showModal, largeImageId, largeImageIdUser } =
+      this.state;
     const { search } = this.props;
 
     if (status === 'idle') {
@@ -81,8 +85,8 @@ class ImageGallery extends React.Component {
           {showModal && (
             <Modal
               toggleModal={this.toggleModal}
-              // src={this.findImageId().largeImageURL}
-              // alt={this.findImageId().tags}
+              src={largeImageId}
+              alt={largeImageIdUser}
             />
           )}
           <ul className={css.ImageGallery}>
@@ -95,6 +99,7 @@ class ImageGallery extends React.Component {
               />
             ))}
           </ul>
+          {images.length > 0 && <Button loadMore={this.props.loadMore} />}
         </>
       );
     }
@@ -164,4 +169,4 @@ export default ImageGallery;
 //   );
 // };
 
-// export default ImageGallery;
+// export default ImageGallery

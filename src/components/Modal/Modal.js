@@ -10,17 +10,23 @@ export default class Modal extends React.Component {
   }
 
   escapeFun = e => {
-    if (e.code === 'Escape') {
-      console.log(this.props.toggleModal);
+    if (e.key === 'Escape') {
+      this.props.toggleModal();
+    }
+  };
+
+  handleBackdrope = e => {
+    if (e.currentTarget === e.target) {
       this.props.toggleModal();
     }
   };
 
   render() {
+    const { src, alt } = this.props;
     return (
-      <div className={css.overlay}>
+      <div className={css.overlay} onClick={this.handleBackdrope}>
         <div className={css.modal}>
-          <img src={this.props.src} alt={this.props.alt} />
+          <img src={src} alt={alt} />
         </div>
       </div>
     );

@@ -5,10 +5,10 @@ const ImageGalleryItem = ({ image, toggleModal }) => {
   return (
     <li className={css.ImageGalleryItem}>
       <img
-        onClick={toggleModal}
-        id={image.id}
+        onClick={() => toggleModal(image.largeImageURL, image.user)}
         src={image.webformatURL}
-        alt={image.tags}
+        alt={image.user}
+        data-large={image.largeImageURL}
         className={css.image}
       />
     </li>
