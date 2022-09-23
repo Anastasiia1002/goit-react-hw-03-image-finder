@@ -18,7 +18,6 @@ class ImageGallery extends React.Component {
   state = {
     images: [],
     error: null,
-    page: 1,
     search: '',
     status: Status.IDLE,
     showModal: false,
@@ -30,16 +29,26 @@ class ImageGallery extends React.Component {
     const prevSearch = prevProps.search;
     const nextSearch = this.props.search;
 
-    if ((prevSearch !== nextSearch, prevProps.page !== this.props.page)) {
+    if (prevSearch !== nextSearch) {
       this.setState({ status: Status.PENDING });
 
       apiImages
         .searchImages(nextSearch, this.props.page)
         .then(images =>
           this.setState(prev => ({
+            images: [...images],
+            status: Status.RESOLVED,
+          }))
+        )
+        .catch(error => this.setState({ error, status: Status.REJECTED }));
+    }
+    if (prevProps.page !== this.props.page && this.props.page !== 1) {
+      apiImages
+        .searchImages(nextSearch, this.props.page)
+        .then(images =>
+          this.setState(prev => ({
             images: [...prev.images, ...images],
             status: Status.RESOLVED,
-            page: prev.page + 1,
           }))
         )
         .catch(error => this.setState({ error, status: Status.REJECTED }));

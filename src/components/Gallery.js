@@ -6,6 +6,7 @@ import Searchbar from './Searchbar/Searchbar';
 class Gallery extends React.Component {
   state = {
     search: '',
+    page: 1,
   };
 
   onSubmit = search => {
