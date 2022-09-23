@@ -1,5 +1,6 @@
 import React from 'react';
 import css from './ImageGalleryItems.module.css';
+import PropTypes from 'prop-types';
 
 const ImageGalleryItem = ({ image, toggleModal }) => {
   return (
@@ -14,26 +15,9 @@ const ImageGalleryItem = ({ image, toggleModal }) => {
     </li>
   );
 };
-// class ImageGalleryItem extends React.Component {
-//   state = {
-//     loading: true
-//   }
-
-//   render() {
-//     return (
-//       {this.props.images.map((image) => (
-//         <li className="gallery-item">
-//     // <img src={image.webformatURL} alt="" />
-//     //   </li>
-//       ))}
-//     )
-
-//     // this.props.searchResults.map(({id, webformatURL,largeImageURL}) => {
-//     //   <li className="gallery-item">
-//     // <img src="" alt="" />
-//     //   </li>
-//     // })
-//   }
-// }
 
 export default ImageGalleryItem;
+ImageGalleryItem.propTypes = {
+  image: PropTypes.array.isRequired,
+  toggleModal: PropTypes.func.isRequired,
+};

@@ -4,6 +4,7 @@ import Loader from '../Loader/Loader';
 import apiImages from '../../utils/searchImages';
 import Modal from '../Modal/Modal';
 import Button from '../Button/Button';
+import PropTypes from 'prop-types';
 
 import css from './ImageGallery.module.css';
 
@@ -114,68 +115,10 @@ class ImageGallery extends React.Component {
     }
   }
 }
-// static getDerivedStateFromProps(nextProps, state) {
-//   if (nextProps.search !== state.search) {
-//     return { search: nextProps.search, page: 1 };
-//   }
-//   return null;
-// }
-
-// componentDidUpdate(prevProps, prevState) {
-//   if (
-//     prevState.page !== this.state.page ||
-//     prevState.search !== this.state.search
-//   ) {
-//     this.setImages();
-//   }
-//   // if (prevState.images !== this.state.images && this.state.page !== 1) {
-//   //   window.scrollBy({
-//   //     top: window.innerHeight - 100,
-//   //     behavior: 'smooth',
-//   //   });
-//   console.log(this.state.images);
-//   //}
-// }
-// setImages = () => {
-//   const { search, page } = this.state;
-//   this.setState({ loading: true });
-//   apiImages({ search, page })
-//     .then(images =>
-//       this.setState(prev => ({ images: [...prev.images, images] }))
-//     )
-//     .catch(error => this.setState({ error }))
-//     .finally(() => this.setState({ loading: false }));
-// };
-
-//   //   changePage = () => {
-//   //     this.setState(prev => ({ page: prev.page + 1 }));
-//   //   };
-
-//   //
-
-//   render() {
-//     const { images, loading } = this.state;
-//     return (
-//       <ul className="gallery">
-//         {loading && <div> Loading ...</div>}
-//         {images.length > 0 &&
-//           images.map(image => (
-//             <ImageGalleryItem key={image.id} image={image} />
-//           ))}
-//       </ul>
-//     );
-//   }
 
 export default ImageGallery;
-
-// const ImageGallery = ({ images }) => {
-//   return (
-//     <ul className={null}>
-//       {images.map(image => (
-//         <ImageGalleryItem key={image.id} image={image} />
-//       ))}
-//     </ul>
-//   );
-// };
-
-// export default ImageGallery
+ImageGallery.propTypes = {
+  search: PropTypes.string.isRequired,
+  loadMore: PropTypes.func.isRequired,
+  page: PropTypes.string.isRequired,
+};
