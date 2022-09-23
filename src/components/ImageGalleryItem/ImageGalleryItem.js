@@ -18,6 +18,10 @@ const ImageGalleryItem = ({ image, toggleModal }) => {
 
 export default ImageGalleryItem;
 ImageGalleryItem.propTypes = {
-  image: PropTypes.array.isRequired,
+  image: PropTypes.PropTypes.shape({
+    webformatURL: PropTypes.string,
+    user: PropTypes.string,
+    largeImageURL: PropTypes.string,
+  }).isRequired,
   toggleModal: PropTypes.func.isRequired,
 };
